@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ouc.dao.XiaoxiMapper">
+  <resultMap id="BaseResultMap" type="com.ouc.entity.Xiaoxi">
+    <id column="id" jdbcType="INTEGER" property="id" />
+	<result column="shetuanbianhao" jdbcType="VARCHAR" property="shetuanbianhao" />
+    <result column="shetuanmingcheng" jdbcType="VARCHAR" property="shetuanmingcheng" />
+    <result column="leibie" jdbcType="VARCHAR" property="leibie" />
+    <result column="tongzhimingcheng" jdbcType="VARCHAR" property="tongzhimingcheng" />
+    <result column="riqi" jdbcType="VARCHAR" property="riqi" />
+    <result column="dengjiren" jdbcType="VARCHAR" property="dengjiren" />
+    <result column="neirong" jdbcType="VARCHAR" property="neirong" />
+    
+    <result column="addtime" jdbcType="VARCHAR" property="addtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, shetuanbianhao,shetuanmingcheng,leibie,tongzhimingcheng,riqi,dengjiren,neirong, addtime
+  </sql>
+  <select id="quchongXiaoxi"  parameterType="java.util.Map" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from xiaoxi 
+    where dengjiren = #{dengjiren,jdbcType=VARCHAR} limit 0,1
+  </select>
+ <select id="getCount"   resultType="int" parameterType="java.util.Map" >
+    select  count(*) from xiaoxi  where 1=1
+    <if test="shetuanbianhao!=null">and shetuanbianhao like  concat('%',#{shetuanbianhao,jdbcType=VARCHAR},'%')</if>
+     <if test="shetuanmingcheng!=null">and shetuanmingcheng like  concat('%',#{shetuanmingcheng,jdbcType=VARCHAR},'%')</if>
+     <if test="leibie!=null">and leibie like  concat('%',#{leibie,jdbcType=VARCHAR},'%')</if>
+     <if test="tongzhimingcheng!=null">and tongzhimingcheng like  concat('%',#{tongzhimingcheng,jdbcType=VARCHAR},'%')</if>
+     <if test="riqi1!=null">and riqi &gt;=  concat('',#{riqi1,jdbcType=VARCHAR},'')</if>
+     <if test="riqi2!=null">and riqi &lt;=  concat('',#{riqi2,jdbcType=VARCHAR},'')</if>
+     <if test="dengjiren!=null">and dengjiren like  concat('%',#{dengjiren,jdbcType=VARCHAR},'%')</if>
+     <if test="neirong!=null">and neirong like  concat('%',#{neirong,jdbcType=VARCHAR},'%')</if>
+     
+  </select> 
+  <select id="getAll"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from xiaoxi  where 1=1
+    <if test="dengjiren!=null">
+    and dengjiren =#{dengjiren}
+    </if>
+  </select>
+  
+  <select id="getsyxiaoxi1"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from xiaoxi  where 1=1
+    limit 0,5
+  </select>
+  <select id="getsyxiaoxi2"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from xiaoxi  where 1=1
+    limit 0,5
+  </select>
+  <select id="getsyxiaoxi3"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from xiaoxi  where 1=1
+    limit 0,5
+  </select>
+  
+   <select id="getByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+     select  <include refid="Base_Column_List" /> 
+     from xiaoxi where 1=1 
+     <if test="shetuanbianhao!=null">and shetuanbianhao like  concat('%',#{shetuanbianhao,jdbcType=VARCHAR},'%')</if>
+     <if test="shetuanmingcheng!=null">and shetuanmingcheng like  concat('%',#{shetuanmingcheng,jdbcType=VARCHAR},'%')</if>
+     <if test="leibie!=null">and leibie like  concat('%',#{leibie,jdbcType=VARCHAR},'%')</if>
+     <if test="tongzhimingcheng!=null">and tongzhimingcheng like  concat('%',#{tongzhimingcheng,jdbcType=VARCHAR},'%')</if>
+     <if test="riqi1!=null">and riqi &gt;=  concat('',#{riqi1,jdbcType=VARCHAR},'')</if>
+     <if test="riqi2!=null">and riqi &lt;=  concat('',#{riqi2,jdbcType=VARCHAR},'')</if>
+     <if test="dengjiren!=null">and dengjiren like  concat('%',#{dengjiren,jdbcType=VARCHAR},'%')</if>
+     <if test="neirong!=null">and neirong like  concat('%',#{neirong,jdbcType=VARCHAR},'%')</if>
+     
+	 order by id desc
+     <if test="pageno!=null and pageSize!=null">
+     limit #{pageno},#{pageSize}
+     </if>
+     </select>
+	 
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xiaoxi
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from xiaoxi
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ouc.entity.Xiaoxi">
+    insert into xiaoxi (id, shetuanbianhao,shetuanmingcheng,leibie,tongzhimingcheng,riqi,dengjiren,neirong, addtime)
+    values (#{id,jdbcType=INTEGER}, #{shetuanbianhao,jdbcType=VARCHAR},#{shetuanmingcheng,jdbcType=VARCHAR},#{leibie,jdbcType=VARCHAR},#{tongzhimingcheng,jdbcType=VARCHAR},#{riqi,jdbcType=VARCHAR},#{dengjiren,jdbcType=VARCHAR},#{neirong,jdbcType=VARCHAR}, #{addtime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ouc.entity.Xiaoxi">
+    insert into xiaoxi
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="shetuanbianhao != null"> shetuanbianhao, </if>
+      <if test="shetuanmingcheng != null"> shetuanmingcheng, </if>
+      <if test="leibie != null"> leibie, </if>
+      <if test="tongzhimingcheng != null"> tongzhimingcheng, </if>
+      <if test="riqi != null"> riqi, </if>
+      <if test="dengjiren != null"> dengjiren, </if>
+      <if test="neirong != null"> neirong, </if>
+      
+      <if test="addtime != null">
+        addtime,
+      </if>
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="shetuanbianhao != null"> #{shetuanbianhao,jdbcType=VARCHAR},</if>
+      <if test="shetuanmingcheng != null"> #{shetuanmingcheng,jdbcType=VARCHAR},</if>
+      <if test="leibie != null"> #{leibie,jdbcType=VARCHAR},</if>
+      <if test="tongzhimingcheng != null"> #{tongzhimingcheng,jdbcType=VARCHAR},</if>
+      <if test="riqi != null"> #{riqi,jdbcType=VARCHAR},</if>
+      <if test="dengjiren != null"> #{dengjiren,jdbcType=VARCHAR},</if>
+      <if test="neirong != null"> #{neirong,jdbcType=VARCHAR},</if>
+      
+      <if test="addtime != null">
+        #{addtime,jdbcType=VARCHAR},
+      </if>
+      
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ouc.entity.Xiaoxi">
+    update xiaoxi
+    <set>
+	  <if test="shetuanbianhao != null"> shetuanbianhao = #{shetuanbianhao,jdbcType=VARCHAR},</if>
+      <if test="shetuanmingcheng != null"> shetuanmingcheng = #{shetuanmingcheng,jdbcType=VARCHAR},</if>
+      <if test="leibie != null"> leibie = #{leibie,jdbcType=VARCHAR},</if>
+      <if test="tongzhimingcheng != null"> tongzhimingcheng = #{tongzhimingcheng,jdbcType=VARCHAR},</if>
+      <if test="riqi != null"> riqi = #{riqi,jdbcType=VARCHAR},</if>
+      <if test="dengjiren != null"> dengjiren = #{dengjiren,jdbcType=VARCHAR},</if>
+      <if test="neirong != null"> neirong = #{neirong,jdbcType=VARCHAR},</if>
+      
+      <if test="addtime != null">
+        addtime = #{addtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  
+  <update id="updateByPrimaryKey" parameterType="com.ouc.entity.Xiaoxi">
+    update xiaoxi
+    set shetuanbianhao = #{shetuanbianhao,jdbcType=VARCHAR},shetuanmingcheng = #{shetuanmingcheng,jdbcType=VARCHAR},leibie = #{leibie,jdbcType=VARCHAR},tongzhimingcheng = #{tongzhimingcheng,jdbcType=VARCHAR},riqi = #{riqi,jdbcType=VARCHAR},dengjiren = #{dengjiren,jdbcType=VARCHAR},neirong = #{neirong,jdbcType=VARCHAR},  addtime = #{addtime,jdbcType=VARCHAR} where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
