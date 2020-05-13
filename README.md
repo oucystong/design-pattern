@@ -47,10 +47,17 @@ jdk13+tomcat9，部署项目出现初始化异常，修改lombok版本为最新�
 
 ## 享元模式
 应用：修改网站的社团展示的静态页面，多个用户查看时，不用创建新的url对象，共享池中的url对象，降低内存的浪费
+
 分析：内部状态是各种类型的网站，外部状态是不同的用户
+
 jsp：修改shetuanlist.jsp，增加shuxuejianmoshetuan.jsp  yecaowenxueshetuan.jsp aixinjuanzhushetuan.jsp fengkuanglunhuashetuan.jsp kuxuanjiewushetuan.jsp
+
 图片：增加各社团的展示图片
+
 util：Website、WebsiteFactory、impl\ConcreteWebsite
+
 server:ShetuanUrlServer、impl\ShetuanUrlServerimpl
+
 dao：ShetuanUrlMapper和相应的mapper映射文件
+
 controller：ShetuanUrlController
